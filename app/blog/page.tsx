@@ -133,11 +133,11 @@ export default function Blog() {
                         </div>
                       )}
                       <h3 className="text-xl font-semibold text-foreground mb-2 line-clamp-2 group-hover:text-atv-orange transition-colors">
-                        {post.title}
+                        <Link href={`/blog/${post.id}`}>{post.title}</Link>
                       </h3>
                       <p className="text-muted-foreground mb-4 flex-1">{excerpt(post.description)}</p>
                       <Link
-                        href="#"
+                        href={`/blog/${post.id}`}
                         className="inline-flex items-center font-medium text-atv-orange hover:text-atv-orange-dark transition-colors"
                       >
                         ვრცლად

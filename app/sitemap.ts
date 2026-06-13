@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllAtvIds } from "@/lib/atvs";
+import { getAllBlogIds } from "@/lib/blogs";
 
 export const dynamic = "force-dynamic";
 
@@ -30,5 +31,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // DB unavailable at build time — static routes still emit.
   }
 
-  return [...staticRoutes, ...atvRoutes];
+  let blogRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const ids = await getAllBlogIds();
+    blogRoutes = ids.map((id) => ({
+      url: `${SITE}/blog/${id}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
+  } catch {
+    // DB unavailable at build time — static routes still emit.
+  }
+
+  return [...staticRoutes, ...atvRoutes, ...blogRoutes];
 }

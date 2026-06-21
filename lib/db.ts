@@ -9,11 +9,13 @@ const globalForDb = globalThis as unknown as { _mysqlPool?: mysql.Pool };
 export const pool: mysql.Pool =
   globalForDb._mysqlPool ??
   mysql.createPool({
+    // Defaults are the production (mykvadro.ge / Plesk) credentials. Local dev
+    // overrides these via .env (DB_USER=root, DB_NAME=atv, etc.).
     host: process.env.DB_HOST || "127.0.0.1",
     port: Number(process.env.DB_PORT || 3306),
-    user: process.env.DB_USER || "root",
-    password: process.env.DB_PASSWORD || "",
-    database: process.env.DB_NAME || "atv",
+    user: process.env.DB_USER || "mykvadro",
+    password: process.env.DB_PASSWORD || "NiNuca199@",
+    database: process.env.DB_NAME || "mykvadro",
     waitForConnections: true,
     connectionLimit: 10,
     namedPlaceholders: true,
